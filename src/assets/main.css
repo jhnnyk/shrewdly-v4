@@ -1,0 +1,26 @@
+:root {
+  --page-bg-color: #0f172a;
+  --content-bg-color: #1e293b;
+  --content-border-color: #334155;
+  --strong-text-color: #f1f5f9;
+  --text-color: #64748b;
+  --highlight-color: #ec4899;
+}
+
+body {
+  color: var(--text-color);
+  background-color: var(--page-bg-color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--strong-text-color);
+}
+
+a {
+  color: var(--highlight-color);
+}
