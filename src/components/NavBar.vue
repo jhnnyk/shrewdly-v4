@@ -8,9 +8,9 @@ import { RouterLink } from 'vue-router'
       <span class="material-symbols-outlined"> home </span><br />
       Home
     </RouterLink>
-    <RouterLink to="/about">
-      <span class="material-symbols-outlined"> settings </span><br />
-      About
+    <RouterLink to="/profile">
+      <span class="material-symbols-outlined"> account_circle </span><br />
+      Profile
     </RouterLink>
   </nav>
 </template>
