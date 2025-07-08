@@ -1,6 +1,8 @@
+<script setup>
+import SigninForm from '@/components/auth/SigninForm.vue'
+</script>
 <template>
   <section>
-    <h1>profile</h1>
-    <p>this is an profile page.</p>
+    <SigninForm />
   </section>
 </template>

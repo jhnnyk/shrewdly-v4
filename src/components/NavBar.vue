@@ -27,9 +27,11 @@ nav {
   background-color: var(--content-bg-color);
   border-top: 1px solid var(--content-border-color);
   text-align: center;
+  font-size: 0.8em;
 }
 
-nav a {
+nav a,
+nav a:hover {
   text-decoration: none;
 }
 </style>
