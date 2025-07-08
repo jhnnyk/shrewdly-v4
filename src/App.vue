@@ -1,17 +1,18 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
+import NavBar from './components/NavBar.vue'
 </script>
 
 <template>
   <header>
     <h1 class="logo">Shredly</h1>
-    <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
-    </nav>
   </header>
 
-  <RouterView />
+  <main>
+    <RouterView />
+  </main>
+
+  <NavBar />
 </template>
 
 <style scoped></style>
