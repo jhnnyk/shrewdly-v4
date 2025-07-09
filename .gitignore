@@ -28,3 +28,7 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+#Firebase
+/src/firebase
+.firebase/hosting.ZGlzdA.cache
