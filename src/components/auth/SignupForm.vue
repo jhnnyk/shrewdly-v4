@@ -1,7 +1,8 @@
 <script setup>
 import { ref } from 'vue'
-import { auth } from '@/firebase'
+import { auth, db } from '@/firebase'
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { doc, setDoc } from 'firebase/firestore'
 import { useUserStore } from '@/stores/UserStore'
 
 const userStore = useUserStore()
@@ -11,24 +12,19 @@ const email = ref('')
 const password = ref('')
 
 const signup = async () => {
-  // createUserWithEmailAndPassword(auth, email.value, password.value)
-  //   .then((userCredential) => {
-  //     // Signed up
-  //     const user = userCredential.user
-  //     console.log(user)
-
-  //     userStore.setUser(user)
-  //     // ...
-  //   })
-  //   .catch((error) => {
-  //     console.log(error.code, error.message)
-  //   })
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value)
     const user = userCredential.user
 
     await updateProfile(user, {
       displayName: displayName.value,
+    })
+
+    await setDoc(doc(db, 'users', user.uid), {
+      displayName: user.displayName,
+      email: user.email,
+      uid: user.uid,
+      role: 'user',
     })
 
     console.log(user)
