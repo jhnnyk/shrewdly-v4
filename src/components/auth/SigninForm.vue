@@ -1,16 +1,53 @@
+<script setup>
+import { ref } from 'vue'
+import { auth } from '@/firebase'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { useUserStore } from '@/stores/UserStore'
+
+const userStore = useUserStore()
+
+const email = ref('')
+const password = ref('')
+
+const login = () => {
+  signInWithEmailAndPassword(auth, email.value, password.value)
+    .then((userCredential) => {
+      // Signed in
+      const user = userCredential.user
+      console.log(user)
+
+      userStore.setUser(user)
+      // ...
+    })
+    .catch((error) => {
+      console.log(error.code, error.message)
+    })
+}
+</script>
+
 <template>
-  <form>
+  <form @submit.prevent="login">
     <h1>Sign In</h1>
     <div>
-      <input type="text" id="email" name="email" placeholder="Enter your email" required />
+      <label for="email">Email</label>
+      <input
+        v-model="email"
+        type="text"
+        id="email"
+        name="email"
+        placeholder="e.g. johndoe@email.com"
+        required
+      />
     </div>
 
     <div>
+      <label for="password">Password</label>
       <input
+        v-model="password"
         type="password"
         id="password"
         name="password"
-        placeholder="Enter your Password"
+        placeholder="e.g. password123"
         required
       />
     </div>
