@@ -15,6 +15,7 @@ const logout = () => {
     .then(() => {
       userStore.clearUser()
       console.log('user signed out')
+      signInUpToggle = 'signin'
     })
     .catch((error) => {
       console.log('Error signing out: ', error)
