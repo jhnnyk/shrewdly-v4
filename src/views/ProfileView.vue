@@ -38,11 +38,13 @@ const logout = () => {
     </div>
   </section>
 
-  <div v-else>
+  <div v-if="userStore.user && !userStore.isLoading">
     <section>
       <h1>Profile</h1>
       <p>{{ userStore.user.displayName }}</p>
     </section>
     <button @click="logout">Sign Out</button>
   </div>
+
+  <section v-if="userStore.isLoading">Loading ....</section>
 </template>

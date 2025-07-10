@@ -12,6 +12,8 @@ const email = ref('')
 const password = ref('')
 
 const signup = async () => {
+  userStore.isLoading = true
+
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value)
     const user = userCredential.user
@@ -33,6 +35,8 @@ const signup = async () => {
   } catch (error) {
     console.log(error.code, error.message)
   }
+
+  userStore.isLoading = false
 }
 </script>
 
