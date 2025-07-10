@@ -63,11 +63,13 @@ section {
 }
 
 form {
+  display: flex;
+  flex-direction: column;
   text-align: center;
 }
 
 form div {
-  margin: 20px 0;
+  margin: 12px auto;
 }
 
 input {
@@ -101,4 +103,8 @@ button:hover {
   font-weight: 400;
   font-style: normal;
   padding: 20px 0;
+}
+
+.field {
+  text-align: left;
 }

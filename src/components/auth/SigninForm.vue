@@ -28,8 +28,8 @@ const login = () => {
 <template>
   <form @submit.prevent="login">
     <h1>Sign In</h1>
-    <div>
-      <label for="email">Email</label>
+    <div class="field">
+      <label for="email">Email</label><br />
       <input
         v-model="email"
         type="text"
@@ -40,8 +40,8 @@ const login = () => {
       />
     </div>
 
-    <div>
-      <label for="password">Password</label>
+    <div class="field">
+      <label for="password">Password</label><br />
       <input
         v-model="password"
         type="password"
