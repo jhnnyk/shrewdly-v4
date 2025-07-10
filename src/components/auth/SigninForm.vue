@@ -55,6 +55,5 @@ const login = () => {
     <div>
       <button type="submit">Sign In</button>
     </div>
-    <p>Or <a href="#">create an account</a>.</p>
   </form>
 </template>

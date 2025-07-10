@@ -108,3 +108,7 @@ button:hover {
 .field {
   text-align: left;
 }
+
+.text-center {
+  text-align: center;
+}
