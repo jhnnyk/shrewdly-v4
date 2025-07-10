@@ -24,27 +24,29 @@ const logout = () => {
 </script>
 
 <template>
-  <section v-if="!userStore.user">
-    <div v-if="signInUpToggle === 'signin'">
-      <SigninForm />
-      <p class="text-center">
-        Or <a @click="signInUpToggle = 'signup'" href="#">create an account</a>.
-      </p>
-    </div>
+  <div class="loading" v-if="userStore.isLoading">Loading ....</div>
 
-    <div v-if="signInUpToggle === 'signup'">
-      <SignupForm />
-      <p class="text-center">Or <a @click="signInUpToggle = 'signin'" href="#">sign in</a>.</p>
-    </div>
-  </section>
+  <div v-else>
+    <section v-if="!userStore.user">
+      <div v-if="signInUpToggle === 'signin'">
+        <SigninForm />
+        <p class="text-center">
+          Or <a @click="signInUpToggle = 'signup'" href="#">create an account</a>.
+        </p>
+      </div>
 
-  <div v-if="userStore.user && !userStore.isLoading">
-    <section>
-      <h1>Profile</h1>
-      <p>{{ userStore.user.displayName }}</p>
+      <div v-if="signInUpToggle === 'signup'">
+        <SignupForm />
+        <p class="text-center">Or <a @click="signInUpToggle = 'signin'" href="#">sign in</a>.</p>
+      </div>
     </section>
-    <button @click="logout">Sign Out</button>
-  </div>
 
-  <section v-if="userStore.isLoading">Loading ....</section>
+    <div v-if="userStore.user">
+      <section>
+        <h1>Profile</h1>
+        <p>{{ userStore.user.displayName }}</p>
+      </section>
+      <button @click="logout">Sign Out</button>
+    </div>
+  </div>
 </template>
