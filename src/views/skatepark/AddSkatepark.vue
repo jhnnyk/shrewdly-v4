@@ -4,6 +4,7 @@ import { ref } from 'vue'
 const newTag = ref('')
 
 const name = ref('')
+const slug = ref('')
 const street = ref('')
 const city = ref('')
 const state = ref('')
@@ -46,6 +47,18 @@ const removeTag = (tagToDelete) => {
           id="name"
           name="name"
           placeholder="e.g. Redstone Skatepark"
+          required
+        />
+      </div>
+
+      <div class="field">
+        <label for="slug">URL slug</label><br />
+        <input
+          v-model="slug"
+          type="text"
+          id="slug"
+          name="slug"
+          placeholder="e.g. redstone"
           required
         />
       </div>
