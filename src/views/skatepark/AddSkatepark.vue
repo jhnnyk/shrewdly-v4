@@ -1,5 +1,10 @@
 <script setup>
 import { ref } from 'vue'
+import { collection, addDoc } from 'firebase/firestore'
+import { db } from '@/firebase'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const newTag = ref('')
 
@@ -32,11 +37,37 @@ const resetTagInput = () => {
 const removeTag = (tagToDelete) => {
   tags.value = tags.value.filter((tag) => tag !== tagToDelete)
 }
+
+const addPark = async () => {
+  // add to db
+  const docRef = await addDoc(collection(db, 'skateparks'), {
+    name: name.value,
+    slug: slug.value,
+    street: street.value,
+    city: city.value,
+    state: state.value,
+    zip: zip.value,
+    latitude: latitude.value,
+    longitude: longitude.value,
+    size: size.value,
+    builder: builder.value,
+    opened_year: opened_year.value,
+    lights: lights.value,
+    tags: tags.value,
+    status: status.value,
+  })
+
+  // confirm write
+  console.log('skatepark added with ID: ', docRef.id)
+
+  // redirect to home screen
+  router.push({ name: 'home' })
+}
 </script>
 
 <template>
   <section>
-    <form>
+    <form @submit.prevent="addPark">
       <h1>Add Skatepark</h1>
 
       <div class="field">
