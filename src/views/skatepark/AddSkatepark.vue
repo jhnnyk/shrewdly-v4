@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 
+const newTag = ref('')
+
 const name = ref('')
 const street = ref('')
 const city = ref('')
@@ -12,8 +14,19 @@ const size = ref('')
 const builder = ref('')
 const opened_year = ref('')
 const lights = ref(false)
-const tags = ref('')
+const tags = ref([])
 const status = ref('open')
+
+const addTag = (newTag) => {
+  if (newTag !== '') {
+    tags.value.push(newTag)
+  }
+  resetTagInput()
+}
+
+const resetTagInput = () => {
+  newTag.value = ''
+}
 </script>
 
 <template>
@@ -134,9 +147,13 @@ const status = ref('open')
       </div>
 
       <div class="field">
-        <label for="tags">tags</label><br />
-        <input v-model="tags" type="text" id="tags" name="tags" placeholder="e.g. DIY" />
-        <button>add tag</button>
+        <label for="newTag">tags</label><br />
+        <div>
+          <button v-for="tag in tags" class="inverted small">{{ tag }}</button>
+        </div>
+
+        <input v-model="newTag" type="text" id="newTag" name="newTag" placeholder="e.g. DIY" />
+        <button @click="addTag(newTag)">add tag</button>
       </div>
 
       <div class="field">
