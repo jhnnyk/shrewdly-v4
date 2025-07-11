@@ -143,13 +143,16 @@ const resetTagInput = () => {
 
       <div class="field">
         <input v-model="lights" type="checkbox" id="lights" name="lights" value="true" />
-        <label for="lights">Lights</label>
+        <label for="lights">Lights<span class="material-symbols-outlined"> lightbulb </span></label>
       </div>
 
       <div class="field">
         <label for="newTag">tags</label><br />
         <div>
-          <button v-for="tag in tags" class="inverted small">{{ tag }}</button>
+          <button v-for="tag in tags" class="inverted small">
+            {{ tag }}
+            <span class="material-symbols-outlined"> cancel </span>
+          </button>
         </div>
 
         <input v-model="newTag" type="text" id="newTag" name="newTag" placeholder="e.g. DIY" />

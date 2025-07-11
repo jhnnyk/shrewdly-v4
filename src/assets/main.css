@@ -142,3 +142,7 @@ button.inverted {
   margin: 20px;
   font-weight: bold;
 }
+
+.material-symbols-outlined {
+  vertical-align: middle;
+}
