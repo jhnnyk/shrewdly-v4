@@ -27,6 +27,10 @@ const addTag = (newTag) => {
 const resetTagInput = () => {
   newTag.value = ''
 }
+
+const removeTag = (tagToDelete) => {
+  tags.value = tags.value.filter((tag) => tag !== tagToDelete)
+}
 </script>
 
 <template>
@@ -151,12 +155,19 @@ const resetTagInput = () => {
         <div>
           <button v-for="tag in tags" class="inverted small">
             {{ tag }}
-            <span class="material-symbols-outlined"> cancel </span>
+            <span @click="removeTag(tag)" class="material-symbols-outlined"> cancel </span>
           </button>
         </div>
 
-        <input v-model="newTag" type="text" id="newTag" name="newTag" placeholder="e.g. DIY" />
-        <button @click="addTag(newTag)">add tag</button>
+        <input
+          @keydown.enter.prevent="addTag(newTag)"
+          v-model="newTag"
+          type="text"
+          id="newTag"
+          name="newTag"
+          placeholder="e.g. DIY"
+        />
+        <button @click.prevent="addTag(newTag)">add tag</button>
       </div>
 
       <div class="field">
