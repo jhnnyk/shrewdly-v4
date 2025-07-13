@@ -37,6 +37,14 @@ h1 {
   font-size: 2.4em;
 }
 
+h2 {
+  font-size: 2.1em;
+}
+
+h3 {
+  font-size: 1.8em;
+}
+
 a {
   color: var(--highlight-color);
   text-decoration: none;
@@ -44,6 +52,11 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+p {
+  margin: 0 0 10px 0;
+  padding: 0;
 }
 
 main {
@@ -145,4 +158,9 @@ button.inverted {
 
 .material-symbols-outlined {
   vertical-align: middle;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
 }
