@@ -18,8 +18,10 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('@/views/ProfileView.vue'),
     },
+
+    // Skateparks
     {
-      path: '/skatepark/new',
+      path: '/skateparks/add',
       name: 'add skatepark',
       component: () => import('@/views/skateparks/AddSkatepark.vue'),
     },
@@ -41,7 +43,17 @@ const router = createRouter({
       //   return true
       // },
       meta: {
-        title: (route) => `edit ${route.params.slug.replace(/-/g, ' ')} skatepark | sk8prks.com`,
+        title: (route) => `edit ${route.params.slug.replace(/-/g, ' ')} skatepark | Shredly`,
+      },
+    },
+
+    // Sessions
+    {
+      path: '/skateparks/:stateSlug/:slug/sessions/add',
+      name: 'add session',
+      component: () => import('@/views/sessions/AddSession.vue'),
+      meta: {
+        title: (route) => `add  ${route.params.slug.replace(/-/g, ' ')} session | Shredly`,
       },
     },
   ],
@@ -49,7 +61,7 @@ const router = createRouter({
 
 router.afterEach((to) => {
   document.title =
-    typeof to.meta.title === 'function' ? to.meta.title(to) : to.meta.title || 'sk8prks.com'
+    typeof to.meta.title === 'function' ? to.meta.title(to) : to.meta.title || 'Shredly'
 })
 
 export default router

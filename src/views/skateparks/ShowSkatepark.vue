@@ -25,10 +25,16 @@ const skateparkStore = useSkateparkStore()
         <p><span class="material-symbols-outlined"> group </span> 0 visits</p>
       </div>
       <div class="action-buttons">
-        <button><span class="material-symbols-outlined"> add_circle </span> Add Session</button>
-        <button class="inverted">
-          <span class="material-symbols-outlined"> photo_camera </span> Add Photo
-        </button>
+        <RouterLink
+          :to="`/skateparks/${skateparkStore.getCurrentPark.state.slice(3)}/${skateparkStore.getCurrentPark.slug}/sessions/add`"
+        >
+          <button><span class="material-symbols-outlined"> add_circle </span> Add Session</button>
+        </RouterLink>
+        <a href="#">
+          <button class="inverted">
+            <span class="material-symbols-outlined"> photo_camera </span> Add Photo
+          </button>
+        </a>
       </div>
     </section>
 
@@ -55,7 +61,13 @@ const skateparkStore = useSkateparkStore()
   display: flex;
 }
 
-.action-buttons button {
+.action-buttons a {
   flex-grow: 1;
+  margin: 0 10px 0 5px;
+}
+
+.action-buttons button {
+  display: block;
+  width: 100%;
 }
 </style>
