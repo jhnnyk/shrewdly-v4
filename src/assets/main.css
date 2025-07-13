@@ -59,6 +59,12 @@ p {
   padding: 0;
 }
 
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+
 main {
   margin: 0 auto;
   padding: 0 20px;
@@ -158,6 +164,23 @@ button.inverted {
 
 .material-symbols-outlined {
   vertical-align: middle;
+}
+
+.park-list li {
+  list-style-type: none;
+  transition: transform 0.2s;
+}
+
+.park-list li:hover {
+  transform: scale(1.02);
+}
+
+.park-list a {
+  color: var(--text-color);
+}
+
+.park-list a:hover {
+  text-decoration: none;
 }
 
 .stats {

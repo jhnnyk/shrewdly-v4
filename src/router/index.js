@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import ShowSkatepark from '@/views/skatepark/ShowSkatepark.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +22,12 @@ const router = createRouter({
       path: '/skatepark/new',
       name: 'add skatepark',
       component: () => import('../views/skatepark/AddSkatepark.vue'),
+    },
+    {
+      path: '/skateparks/:stateSlug/:slug',
+      name: 'show skatepark',
+      component: ShowSkatepark,
+      meta: { title: (route) => `${route.params.slug.replace(/-/g, ' ')} skatepark | Shredly` },
     },
   ],
 })

@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { useRoute } from 'vue-router'
 import { db } from '@/firebase'
 import { collection, getDocs, orderBy, query } from 'firebase/firestore'
 
@@ -28,5 +29,13 @@ export const useSkateparkStore = defineStore('SkateparkStore', {
 
   getters: {
     getParks: (state) => state.parks,
+
+    getCurrentPark: (state) => {
+      const route = useRoute()
+
+      return state.parks.find(
+        (park) => park.state.slice(3) === route.params.stateSlug && park.slug === route.params.slug,
+      )
+    },
   },
 })
