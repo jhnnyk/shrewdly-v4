@@ -1,21 +1,52 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useSkateparkStore } from '@/stores/SkateparkStore'
+import { useUserStore } from '@/stores/UserStore'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
+import { collection, addDoc } from 'firebase/firestore'
+import { db } from '@/firebase'
 
 const skateparkStore = useSkateparkStore()
+const userStore = useUserStore()
+const router = useRouter()
+
 const date = ref()
 const duration = ref()
 const title = ref('')
 const notes = ref('')
+
+const addSession = async () => {
+  // add to DB
+  const docRef = await addDoc(collection(db, 'sessions'), {
+    skatepark_id: skateparkStore.getCurrentPark.id,
+    user_id: userStore.user.uid,
+    session_date: date.value,
+    duration: duration.value,
+    title: title.value,
+    notes: notes.value,
+  })
+
+  // confirm write
+  console.log('Session added with ID: ', docRef.id)
+
+  // redirect back to skatepark page
+  router.push({
+    name: 'show skatepark',
+    params: {
+      stateSlug: skateparkStore.getCurrentPark.state.slice(3),
+      slug: skateparkStore.getCurrentPark.slug,
+    },
+  })
+}
 </script>
 
 <template>
   <div v-if="skateparkStore.isLoading">Loading ...</div>
   <div v-else>
     <section>
-      <form>
+      <form @submit.prevent="addSession">
         <h1>Add {{ skateparkStore.getCurrentPark.name }} Session</h1>
         <div class="field">
           <label for="date">date</label><br />
@@ -34,6 +65,9 @@ const notes = ref('')
             <option value="105">1hr 45m</option>
             <option value="120">2hr</option>
             <option value="135">2hr 15m</option>
+            <option value="150">2hr 30m</option>
+            <option value="165">2hr 45m</option>
+            <option value="180">3hr</option>
           </select>
         </div>
 
