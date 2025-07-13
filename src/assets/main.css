@@ -187,6 +187,7 @@ button.inverted {
 .park-list li {
   list-style-type: none;
   transition: transform 0.2s;
+  margin-bottom: 20px;
 }
 
 .park-list li:hover {
