@@ -32,4 +32,9 @@ const router = createRouter({
   ],
 })
 
+router.afterEach((to) => {
+  document.title =
+    typeof to.meta.title === 'function' ? to.meta.title(to) : to.meta.title || 'sk8prks.com'
+})
+
 export default router
