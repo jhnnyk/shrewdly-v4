@@ -10,6 +10,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@vuepic/vue-datepicker": "^11.0.2",
     "firebase": "^11.10.0",
     "pinia": "^3.0.3",
     "vue": "^3.5.17",

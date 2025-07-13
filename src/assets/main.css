@@ -90,7 +90,7 @@ form {
   text-align: center;
 }
 
-form div {
+form div.field {
   margin: 12px auto;
 }
 
