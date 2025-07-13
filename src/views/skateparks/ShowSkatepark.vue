@@ -1,7 +1,14 @@
 <script setup>
 import { useSkateparkStore } from '@/stores/SkateparkStore'
+import { useSessionStore } from '@/stores/SessionStore'
+import { onMounted } from 'vue'
 
 const skateparkStore = useSkateparkStore()
+const sessionStore = useSessionStore()
+
+onMounted(() => {
+  sessionStore.fetchSessions()
+})
 </script>
 
 <template>
@@ -37,6 +44,13 @@ const skateparkStore = useSkateparkStore()
         </a>
       </div>
     </section>
+
+    <div>
+      <h4>Recent Sessions</h4>
+      <ul>
+        <li v-for="session in sessionStore.getSessions" :key="session.id">{{ session.title }}</li>
+      </ul>
+    </div>
 
     <div class="admin">
       <h4>Admin</h4>
