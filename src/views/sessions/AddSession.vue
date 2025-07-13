@@ -7,6 +7,10 @@ const skateparkStore = useSkateparkStore()
 <template>
   <div v-if="skateparkStore.isLoading">Loading ...</div>
   <div v-else>
-    <h1>Add {{ skateparkStore.getCurrentPark.name }} Session</h1>
+    <section>
+      <form>
+        <h1>Add {{ skateparkStore.getCurrentPark.name }} Session</h1>
+      </form>
+    </section>
   </div>
 </template>
