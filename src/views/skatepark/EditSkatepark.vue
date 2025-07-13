@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue'
 import { useSkateparkStore } from '@/stores/SkateparkStore'
 import { doc, setDoc } from 'firebase/firestore'
 import { db } from '@/firebase'
@@ -6,6 +7,25 @@ import { useRouter } from 'vue-router'
 
 const skateparkStore = useSkateparkStore()
 const router = useRouter()
+
+const newTag = ref('')
+
+const addTag = (newTag) => {
+  if (newTag !== '') {
+    skateparkStore.getCurrentPark.tags.push(newTag)
+  }
+  resetTagInput()
+}
+
+const resetTagInput = () => {
+  newTag.value = ''
+}
+
+const removeTag = (tagToDelete) => {
+  skateparkStore.getCurrentPark.tags = skateparkStore.getCurrentPark.tags.filter(
+    (tag) => tag !== tagToDelete,
+  )
+}
 
 const updatePark = async () => {
   // save updates to DB
@@ -191,13 +211,13 @@ const updatePark = async () => {
         <div>
           <button v-for="tag in skateparkStore.getCurrentPark.tags" class="inverted small">
             {{ tag }}
-            <span @click="removeTag(tag)" class="material-symbols-outlined"> cancel </span>
+            <span @click.prevent="removeTag(tag)" class="material-symbols-outlined"> cancel </span>
           </button>
         </div>
 
         <input
           @keydown.enter.prevent="addTag(newTag)"
-          v-model="skateparkStore.getCurrentPark.newTag"
+          v-model="newTag"
           type="text"
           id="newTag"
           name="newTag"
