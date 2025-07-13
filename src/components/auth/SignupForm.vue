@@ -10,6 +10,7 @@ const userStore = useUserStore()
 const displayName = ref('')
 const email = ref('')
 const password = ref('')
+const sport = ref('skateboard')
 
 const signup = async () => {
   userStore.isLoading = true
@@ -27,6 +28,7 @@ const signup = async () => {
       email: user.email,
       uid: user.uid,
       role: 'user',
+      sport: sport.value,
     })
 
     console.log(user)
@@ -53,6 +55,17 @@ const signup = async () => {
         placeholder="e.g. johndoe@email.com"
         required
       />
+    </div>
+
+    <div class="field">
+      <label for="sport">Preferred activity</label><br />
+      <select v-model="sport" name="sport" id="sport">
+        <option value="skateboard">Skateboard</option>
+        <option value="scooter">Scooter</option>
+        <option value="BMX">BMX</option>
+        <option value="inline">Inline Skates</option>
+        <option value="quad">Quad Skates</option>
+      </select>
     </div>
 
     <div class="field">
