@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import ShowSkatepark from '@/views/skatepark/ShowSkatepark.vue'
+import ShowSkatepark from '@/views/skateparks/ShowSkatepark.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,7 +21,7 @@ const router = createRouter({
     {
       path: '/skatepark/new',
       name: 'add skatepark',
-      component: () => import('@/views/skatepark/AddSkatepark.vue'),
+      component: () => import('@/views/skateparks/AddSkatepark.vue'),
     },
     {
       path: '/skateparks/:stateSlug/:slug',
@@ -32,7 +32,7 @@ const router = createRouter({
     {
       path: '/skateparks/:stateSlug/:slug/edit',
       name: 'edit skatepark',
-      component: () => import('@/views/skatepark/EditSkatepark.vue'),
+      component: () => import('@/views/skateparks/EditSkatepark.vue'),
       // beforeEnter: (to, from) => {
       //   const userStore = useUserStore()
       //   if (!userStore.user) {
