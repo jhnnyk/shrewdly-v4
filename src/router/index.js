@@ -16,18 +16,33 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/ProfileView.vue'),
+      component: () => import('@/views/ProfileView.vue'),
     },
     {
       path: '/skatepark/new',
       name: 'add skatepark',
-      component: () => import('../views/skatepark/AddSkatepark.vue'),
+      component: () => import('@/views/skatepark/AddSkatepark.vue'),
     },
     {
       path: '/skateparks/:stateSlug/:slug',
       name: 'show skatepark',
       component: ShowSkatepark,
       meta: { title: (route) => `${route.params.slug.replace(/-/g, ' ')} skatepark | Shredly` },
+    },
+    {
+      path: '/skateparks/:stateSlug/:slug/edit',
+      name: 'edit skatepark',
+      component: () => import('@/views/skatepark/EditSkatepark.vue'),
+      // beforeEnter: (to, from) => {
+      //   const userStore = useUserStore()
+      //   if (!userStore.user) {
+      //     return { name: 'login' }
+      //   }
+      //   return true
+      // },
+      meta: {
+        title: (route) => `edit ${route.params.slug.replace(/-/g, ' ')} skatepark | sk8prks.com`,
+      },
     },
   ],
 })

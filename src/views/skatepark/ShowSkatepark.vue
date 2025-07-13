@@ -31,6 +31,18 @@ const skateparkStore = useSkateparkStore()
         </button>
       </div>
     </section>
+
+    <div class="admin">
+      <h4>Admin</h4>
+      <RouterLink
+        :to="`/skateparks/${skateparkStore.getCurrentPark.state.slice(3)}/${skateparkStore.getCurrentPark.slug}/edit`"
+      >
+        <button class="inverted">
+          <span class="material-symbols-outlined"> edit </span>
+          Edit {{ skateparkStore.getCurrentPark.name }}
+        </button>
+      </RouterLink>
+    </div>
   </div>
 </template>
 
