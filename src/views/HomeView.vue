@@ -19,7 +19,7 @@ const skateparkStore = useSkateparkStore()
 
             <div class="stats">
               <p><span class="material-symbols-outlined"> photo_camera </span> 0 photos</p>
-              <p><span class="material-symbols-outlined"> group </span> 0 visits</p>
+              <p><span class="material-symbols-outlined"> group </span> 0 sessions</p>
             </div>
           </section>
         </RouterLink>
