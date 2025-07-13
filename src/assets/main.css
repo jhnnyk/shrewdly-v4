@@ -21,10 +21,7 @@ body {
 
 h1,
 h2,
-h3,
-h4,
-h5,
-h6 {
+h3 {
   color: var(--strong-text-color);
   font-family: 'Sedgwick Ave Display', cursive;
   font-weight: 400;
@@ -112,7 +109,7 @@ input[type='checkbox'] {
 button {
   background-color: var(--highlight-color);
   color: var(--strong-text-color);
-  border: none;
+  border: 2px solid var(--highlight-color);
   border-radius: 12px;
   padding: 10px 14px;
   font-size: 1em;
@@ -164,6 +161,21 @@ button.inverted {
 
 .material-symbols-outlined {
   vertical-align: middle;
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 300,
+    'GRAD' -25,
+    'opsz' 24;
+  position: relative;
+  top: -2px;
+}
+
+.material-symbols-outlined.solid {
+  font-variation-settings: 'FILL' 1;
+}
+
+.material-symbols-outlined.highlight {
+  color: var(--highlight-color);
 }
 
 .park-list li {
@@ -186,4 +198,12 @@ button.inverted {
 .stats {
   display: flex;
   justify-content: space-between;
+}
+
+.rating {
+  color: var(--strong-text-color);
+  font-weight: bold;
+  font-size: 1.4em;
+  display: inline-block;
+  padding: 0 5px;
 }
