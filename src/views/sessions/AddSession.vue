@@ -14,15 +14,17 @@ const router = useRouter()
 
 const date = ref()
 const duration = ref()
+// const sport = ref()
 const title = ref('')
 const notes = ref('')
 
 const addSession = async () => {
   // add to DB
   const docRef = await addDoc(collection(db, 'sessions'), {
-    skatepark_id: skateparkStore.getCurrentPark.id,
-    user_id: userStore.user.uid,
-    session_date: date.value,
+    skateparkId: skateparkStore.getCurrentPark.id,
+    userId: userStore.user.uid,
+    displayName: userStore.user.displayName,
+    sessionDate: date.value,
     duration: duration.value,
     title: title.value,
     notes: notes.value,
@@ -43,7 +45,7 @@ const addSession = async () => {
 </script>
 
 <template>
-  <div v-if="skateparkStore.isLoading">Loading ...</div>
+  <div v-if="skateparkStore.isLoading || userStore.isLoading">Loading ...</div>
   <div v-else>
     <section>
       <form @submit.prevent="addSession">
@@ -68,6 +70,17 @@ const addSession = async () => {
             <option value="150">2hr 30m</option>
             <option value="165">2hr 45m</option>
             <option value="180">3hr</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="sport">activity</label><br />
+          <select v-model="userStore.user.sport" name="sport" id="sport">
+            <option value="skateboard">Skateboard</option>
+            <option value="scooter">Scooter</option>
+            <option value="BMX">BMX</option>
+            <option value="inline">Inline Skates</option>
+            <option value="quad">Quad Skates</option>
           </select>
         </div>
 
