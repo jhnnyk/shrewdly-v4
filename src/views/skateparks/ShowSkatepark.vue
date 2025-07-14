@@ -1,13 +1,13 @@
 <script setup>
 import { useSkateparkStore } from '@/stores/SkateparkStore'
 import { useSessionStore } from '@/stores/SessionStore'
-import { onMounted } from 'vue'
+import { onMounted, watch } from 'vue'
 
 const skateparkStore = useSkateparkStore()
 const sessionStore = useSessionStore()
 
 onMounted(() => {
-  sessionStore.fetchSessions()
+  sessionStore.fetchSkateparkSessions()
   console.log('fetching sessions')
 })
 
@@ -75,7 +75,7 @@ const getSportIcon = (sport) => {
     <div>
       <h4>Recent Sessions</h4>
       <ul>
-        <li v-for="session in sessionStore.getSessions" :key="session.id">
+        <li v-for="session in sessionStore.getSkateparkSessions" :key="session.id">
           <span class="material-symbols-outlined">
             {{ getSportIcon(session.sport) }}
           </span>
