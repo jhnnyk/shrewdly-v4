@@ -14,7 +14,6 @@ const router = useRouter()
 
 const date = ref()
 const duration = ref()
-// const sport = ref()
 const title = ref('')
 const notes = ref('')
 
@@ -26,6 +25,7 @@ const addSession = async () => {
     displayName: userStore.user.displayName,
     sessionDate: date.value,
     duration: duration.value,
+    sport: userStore.user.sport,
     title: title.value,
     notes: notes.value,
   })
