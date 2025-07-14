@@ -15,7 +15,7 @@ export const useSessionStore = defineStore('SessionStore', {
       const sessionCollection = collection(db, 'sessions')
 
       try {
-        const q = query(sessionCollection, orderBy('sessionDate'), limit(10))
+        const q = query(sessionCollection, orderBy('sessionDate', 'desc'), limit(10))
         const querySnapshot = await getDocs(q)
         this.sessions = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
         this.isLoading = false
