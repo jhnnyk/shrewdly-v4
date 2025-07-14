@@ -68,6 +68,10 @@ li {
   padding: 0;
 }
 
+li {
+  list-style-type: none;
+}
+
 main {
   margin: 0 auto;
   padding: 0 20px;
@@ -185,7 +189,6 @@ button.inverted {
 }
 
 .park-list li {
-  list-style-type: none;
   transition: transform 0.2s;
   margin-bottom: 20px;
 }

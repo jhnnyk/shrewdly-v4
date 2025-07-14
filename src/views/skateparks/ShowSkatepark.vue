@@ -18,6 +18,24 @@ const formatDate = (date) => {
     day: 'numeric',
   })
 }
+
+const getSportIcon = (sport) => {
+  switch (sport) {
+    case 'skateboard':
+      return 'skateboarding'
+    case 'inline':
+      return 'roller_skating'
+    case 'quad':
+      return 'roller_skating'
+    case 'BMX':
+      return 'pedal_bike'
+    case 'scooter':
+      return 'scooter'
+    default:
+      ' '
+      break
+  }
+}
 </script>
 
 <template>
@@ -58,6 +76,10 @@ const formatDate = (date) => {
       <h4>Recent Sessions</h4>
       <ul>
         <li v-for="session in sessionStore.getSessions" :key="session.id">
+          <span class="material-symbols-outlined">
+            {{ getSportIcon(session.sport) }}
+          </span>
+
           {{ formatDate(session.sessionDate) }} : {{ session.title }} - {{ session.displayName }}
         </li>
       </ul>
