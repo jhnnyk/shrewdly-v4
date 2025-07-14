@@ -8,7 +8,16 @@ const sessionStore = useSessionStore()
 
 onMounted(() => {
   sessionStore.fetchSessions()
+  console.log('fetching sessions')
 })
+
+const formatDate = (date) => {
+  return date.toDate().toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  })
+}
 </script>
 
 <template>
@@ -48,7 +57,9 @@ onMounted(() => {
     <div>
       <h4>Recent Sessions</h4>
       <ul>
-        <li v-for="session in sessionStore.getSessions" :key="session.id">{{ session.title }}</li>
+        <li v-for="session in sessionStore.getSessions" :key="session.id">
+          {{ formatDate(session.sessionDate) }} : {{ session.title }} - {{ session.displayName }}
+        </li>
       </ul>
     </div>
 
