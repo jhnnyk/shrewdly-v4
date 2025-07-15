@@ -26,7 +26,7 @@ const router = createRouter({
       component: () => import('@/views/skateparks/AddSkatepark.vue'),
     },
     {
-      path: '/skateparks/:stateSlug/:slug',
+      path: '/skateparks/:stateSlug/:slug/:id',
       name: 'show skatepark',
       component: ShowSkatepark,
       meta: { title: (route) => `${route.params.slug.replace(/-/g, ' ')} skatepark | Shredly` },

@@ -9,7 +9,7 @@ const skateparkStore = useSkateparkStore()
   <div v-else>
     <ul class="park-list">
       <li v-for="park in skateparkStore.getParks" :key="park.id">
-        <RouterLink :to="`/skateparks/${park.state.slice(3)}/${park.slug}`">
+        <RouterLink :to="`/skateparks/${park.state.slice(3)}/${park.slug}/${park.id}`">
           <section>
             <h3>{{ park.name }}</h3>
             <p>
