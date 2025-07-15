@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { db } from '@/firebase'
 import { collection, getDocs, limit, orderBy, query, where } from 'firebase/firestore'
+import { useSkateparkStore } from './SkateparkStore'
 
 export const useSessionStore = defineStore('SessionStore', {
   state: () => ({
@@ -45,6 +46,9 @@ export const useSessionStore = defineStore('SessionStore', {
 
         this.skateparkSessions = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
         this.isLoading = false
+
+        const skateparkStore = useSkateparkStore()
+        skateparkStore.updateSessionCount(id, this.skateparkSessions.length)
       } catch (error) {
         console.log(error)
         this.error = error
