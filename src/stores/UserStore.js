@@ -19,6 +19,7 @@ export const useUserStore = defineStore('UserStore', {
         // console.log('Document data:', docSnap.data())
         this.user.role = docSnap.data().role
         this.user.sport = docSnap.data().sport
+        this.user.skateparksVisited = docSnap.data().skateparksVisited
       } else {
         // docSnap.data() will be undefined in this case
         console.log('No such document!')

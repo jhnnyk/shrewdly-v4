@@ -44,7 +44,13 @@ const logout = () => {
     <div v-if="userStore.user">
       <section>
         <h1>Profile</h1>
-        <p>{{ userStore.user.displayName }}</p>
+        <p>
+          <span class="material-symbols-outlined"> person </span>
+          {{ userStore.user.displayName }}
+        </p>
+        <p v-if="userStore.user.skateparksVisited">
+          Skateparks visited: {{ userStore.user.skateparksVisited.length }}
+        </p>
       </section>
       <button @click="logout">Sign Out</button>
     </div>
