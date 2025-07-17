@@ -5,7 +5,7 @@ import { useSkateparkStore } from '@/stores/SkateparkStore'
 import { useUserStore } from '@/stores/UserStore'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
-import { collection, addDoc } from 'firebase/firestore'
+import { collection, addDoc, doc, updateDoc, arrayUnion } from 'firebase/firestore'
 import { db } from '@/firebase'
 
 const skateparkStore = useSkateparkStore()
@@ -33,12 +33,20 @@ const addSession = async () => {
   // confirm write
   console.log('Session added with ID: ', docRef.id)
 
+  // add skatepark to users visited list
+  const userRef = doc(db, 'users', userStore.user.uid)
+  await updateDoc(userRef, { skateparksVisited: arrayUnion(skateparkStore.getCurrentPark.id) })
+
+  //confirm write
+  console.log('skatepark', skateparkStore.getCurrentPark.name, 'added to users visited list')
+
   // redirect back to skatepark page
   router.push({
     name: 'show skatepark',
     params: {
       stateSlug: skateparkStore.getCurrentPark.state.slice(3),
       slug: skateparkStore.getCurrentPark.slug,
+      id: skateparkStore.getCurrentPark.id,
     },
   })
 }

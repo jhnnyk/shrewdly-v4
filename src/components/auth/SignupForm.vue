@@ -29,6 +29,7 @@ const signup = async () => {
       uid: user.uid,
       role: 'user',
       sport: sport.value,
+      skateparksVisited: [],
     })
 
     console.log(user)
