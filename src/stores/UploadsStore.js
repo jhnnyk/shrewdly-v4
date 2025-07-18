@@ -31,6 +31,8 @@ export const useUploadsStore = defineStore('UploadsStore', {
           this.isUploading = false
         },
         async () => {
+          console.log(file)
+
           // Upload complete to original path
           // Firebase Extension will now process and create resized images
           // You might need to listen for changes in the resized image path
@@ -38,7 +40,9 @@ export const useUploadsStore = defineStore('UploadsStore', {
 
           // For simplicity, let's assume the resized image will be named similar to the original,
           // or you might have a mechanism to fetch the resized URL from Firestore
-          const resizedFilePath = `images/resized/200x200_${file.name}` // Example resized path
+          const lastDotIndex = file.name.lastIndexOf('.')
+          const baseName = file.name.substring(0, lastDotIndex)
+          const resizedFilePath = `images/original/resized/${baseName}_200x200.jpeg` // Example resized path
           const resizedFileRef = storageRef(storage, resizedFilePath)
 
           try {

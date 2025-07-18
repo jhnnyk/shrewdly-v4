@@ -7,6 +7,7 @@ import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import { collection, addDoc, doc, updateDoc, arrayUnion } from 'firebase/firestore'
 import { db } from '@/firebase'
+import ImageUploader from '@/components/ImageUploader.vue'
 
 const skateparkStore = useSkateparkStore()
 const userStore = useUserStore()
@@ -113,6 +114,8 @@ const addSession = async () => {
             placeholder="Had a great time with my friends... "
           ></textarea>
         </div>
+
+        <ImageUploader />
 
         <div class="field">
           <button class="large" type="submit">
