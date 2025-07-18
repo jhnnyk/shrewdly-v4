@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import { ref as storageRef, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import { storage } from '@/firebase'
+import { useSkateparkStore } from './SkateparkStore'
+import { useUserStore } from './UserStore'
 
 export const useUploadsStore = defineStore('UploadsStore', {
   state: () => ({
@@ -17,7 +19,10 @@ export const useUploadsStore = defineStore('UploadsStore', {
       this.uploadError = null
       this.uploadedImageUrl = null
 
-      const filePath = `images/original/${file.name}` // original image path
+      const skateparkStore = useSkateparkStore()
+      const userStore = useUserStore()
+
+      const filePath = `images/${skateparkStore.getCurrentPark.id}/${userStore.user.uid}/${file.name}` // original image path
       const fileRef = storageRef(storage, filePath)
       const uploadTask = uploadBytesResumable(fileRef, file)
 
@@ -42,7 +47,7 @@ export const useUploadsStore = defineStore('UploadsStore', {
           // or you might have a mechanism to fetch the resized URL from Firestore
           const lastDotIndex = file.name.lastIndexOf('.')
           const baseName = file.name.substring(0, lastDotIndex)
-          const resizedFilePath = `images/original/resized/${baseName}_200x200.jpeg` // Example resized path
+          const resizedFilePath = `images/${skateparkStore.getCurrentPark.id}/${userStore.user.uid}/resized/${baseName}_200x200.jpeg` // Example resized path
           const resizedFileRef = storageRef(storage, resizedFilePath)
 
           try {
