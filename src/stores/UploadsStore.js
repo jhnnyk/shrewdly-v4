@@ -49,7 +49,7 @@ export const useUploadsStore = defineStore('UploadsStore', {
         },
         async () => {
           // Original upload complete
-          const originalUrl = await getDownloadURL(fileRef)
+          // const originalUrl = await getDownloadURL(fileRef)
 
           // Manually create Firestore doc (Cloud Function will update it later)
           const docRef = doc(db, 'images', imageId)
@@ -58,7 +58,7 @@ export const useUploadsStore = defineStore('UploadsStore', {
             {
               parkId,
               userId,
-              originalUrl,
+              // originalUrl,
               createdAt: Date.now(),
               status: 'uploaded',
             },
@@ -68,6 +68,9 @@ export const useUploadsStore = defineStore('UploadsStore', {
           // Listen for updates from Cloud Function
           onSnapshot(docRef, (docSnap) => {
             const data = docSnap.data()
+
+            console.log('we have the photo: ', data)
+
             if (data?.smUrl && data?.lgUrl) {
               this.photos.push({
                 sm: data.smUrl,

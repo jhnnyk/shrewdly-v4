@@ -17,23 +17,27 @@ exports.saveResizedImageMetadata = onObjectFinalized(async (event) => {
   const bucket = getStorage().bucket(object.bucket)
   const file = bucket.file(filePath)
 
-  const [metadata] = await file.getMetadata()
   const [downloadUrl] = await file.getSignedUrl({
     action: 'read',
     expires: '03-01-2500',
   })
 
+  // Parse identifiers from path
   const parts = filePath.split('/')
   const parkId = parts[1]
   const userId = parts[2]
-  const filename = parts[4]
+  const filename = parts[4] // e.g. photo_200x200.jpeg
 
-  const baseName = filename.split('_')[0]
-  const sizeSuffix = filename.split('_')[1] || ''
+  // Get base image ID
+  const baseName = filename.split('_')[0] // "photo"
+  const sizeSuffix = filename.split('_')[1] || '' // "200x200.jpeg"
   const imageId = `${parkId}_${userId}_${baseName}`
+
+  // Determine which field to update
   const sizeKey = sizeSuffix.includes('600') ? 'lgUrl' : 'smUrl'
 
   const docRef = db.collection('images').doc(imageId)
+
   await docRef.set(
     {
       parkId,
@@ -42,7 +46,7 @@ exports.saveResizedImageMetadata = onObjectFinalized(async (event) => {
       updatedAt: admin.firestore.FieldValue.serverTimestamp(),
     },
     { merge: true },
-  )
+  ) // Merge prevents overwriting the other URL
 
   console.log(`✅ Stored ${sizeKey} for ${filePath}`)
 })
