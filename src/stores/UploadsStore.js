@@ -3,6 +3,13 @@ import { ref as storageRef, uploadBytesResumable, getDownloadURL } from 'firebas
 import { storage } from '@/firebase'
 import { useSkateparkStore } from './SkateparkStore'
 import { useUserStore } from './UserStore'
+import { doc, setDoc, onSnapshot } from 'firebase/firestore'
+import { db } from '@/firebase'
+
+function getImageId(parkId, userId, filename) {
+  const baseName = filename.split('.')[0] // removes .jpg, .png, etc.
+  return `${parkId}_${userId}_${baseName}`
+}
 
 export const useUploadsStore = defineStore('UploadsStore', {
   state: () => ({
@@ -10,6 +17,7 @@ export const useUploadsStore = defineStore('UploadsStore', {
     uploadError: null,
     uploadedImageUrl: null,
     isUploading: false,
+    photos: [],
   }),
 
   actions: {
@@ -22,8 +30,12 @@ export const useUploadsStore = defineStore('UploadsStore', {
       const skateparkStore = useSkateparkStore()
       const userStore = useUserStore()
 
-      const filePath = `images/${skateparkStore.getCurrentPark.id}/${userStore.user.uid}/${file.name}` // original image path
+      const parkId = skateparkStore.getCurrentPark.id
+      const userId = userStore.user.uid
+      const filePath = `images/${parkId}/${userId}/${file.name}`
       const fileRef = storageRef(storage, filePath)
+      const imageId = getImageId(parkId, userId, file.name)
+
       const uploadTask = uploadBytesResumable(fileRef, file)
 
       uploadTask.on(
@@ -36,29 +48,35 @@ export const useUploadsStore = defineStore('UploadsStore', {
           this.isUploading = false
         },
         async () => {
-          console.log(file)
+          // Original upload complete
+          const originalUrl = await getDownloadURL(fileRef)
 
-          // Upload complete to original path
-          // Firebase Extension will now process and create resized images
-          // You might need to listen for changes in the resized image path
-          // or assume a consistent naming convention for resized images
+          // Manually create Firestore doc (Cloud Function will update it later)
+          const docRef = doc(db, 'images', imageId)
+          await setDoc(
+            docRef,
+            {
+              parkId,
+              userId,
+              originalUrl,
+              createdAt: Date.now(),
+              status: 'uploaded',
+            },
+            { merge: true },
+          )
 
-          // For simplicity, let's assume the resized image will be named similar to the original,
-          // or you might have a mechanism to fetch the resized URL from Firestore
-          const lastDotIndex = file.name.lastIndexOf('.')
-          const baseName = file.name.substring(0, lastDotIndex)
-          const resizedFilePath = `images/${skateparkStore.getCurrentPark.id}/${userStore.user.uid}/resized/${baseName}_200x200.jpeg` // Example resized path
-          const resizedFileRef = storageRef(storage, resizedFilePath)
-
-          try {
-            const url = await getDownloadURL(resizedFileRef)
-            this.uploadedImageUrl = url
-            console.log('uploaded image URL: ', url)
-          } catch (error) {
-            this.uploadError = error
-          } finally {
-            this.isUploading = false
-          }
+          // Listen for updates from Cloud Function
+          onSnapshot(docRef, (docSnap) => {
+            const data = docSnap.data()
+            if (data?.smUrl && data?.lgUrl) {
+              this.photos.push({
+                sm: data.smUrl,
+                lg: data.lgUrl,
+              })
+              this.uploadedImageUrl = data.smUrl
+              this.isUploading = false
+            }
+          })
         },
       )
     },
