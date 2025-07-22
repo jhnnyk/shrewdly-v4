@@ -49,7 +49,6 @@ export const useUploadsStore = defineStore('UploadsStore', {
         },
         async () => {
           // Original upload complete
-          // const originalUrl = await getDownloadURL(fileRef)
 
           // Manually create Firestore doc (Cloud Function will update it later)
           const docRef = doc(db, 'images', imageId)

@@ -24,7 +24,7 @@ const uploadImage = () => {
     </button>
 
     <div v-if="uploadsStore.isUploading">
-      uploading: {{ uploadsStore.uploadProgress.toFixed(2) }}
+      uploading: {{ uploadsStore.uploadProgress.toFixed(2) }}%
     </div>
 
     <div v-if="uploadsStore.uploadError">error: {{ uploadsStore.uploadError.message }}</div>
