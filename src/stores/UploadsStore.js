@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref as storageRef, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
+import { ref as storageRef, uploadBytesResumable } from 'firebase/storage'
 import { storage } from '@/firebase'
 import { useSkateparkStore } from './SkateparkStore'
 import { useUserStore } from './UserStore'
@@ -17,6 +17,7 @@ export const useUploadsStore = defineStore('UploadsStore', {
     uploadError: null,
     uploadedImageUrl: null,
     isUploading: false,
+    isProcessing: false,
     photos: [],
   }),
 
@@ -26,6 +27,7 @@ export const useUploadsStore = defineStore('UploadsStore', {
       this.uploadProgress = 0
       this.uploadError = null
       this.uploadedImageUrl = null
+      this.isProcessing = false
 
       const skateparkStore = useSkateparkStore()
       const userStore = useUserStore()
@@ -49,6 +51,7 @@ export const useUploadsStore = defineStore('UploadsStore', {
         },
         async () => {
           // Original upload complete
+          this.isProcessing = true
 
           // Manually create Firestore doc (Cloud Function will update it later)
           const docRef = doc(db, 'images', imageId)
@@ -77,6 +80,7 @@ export const useUploadsStore = defineStore('UploadsStore', {
               })
               this.uploadedImageUrl = data.smUrl
               this.isUploading = false
+              this.isProcessing = false
             }
           })
         },
