@@ -6,6 +6,15 @@ import { useUserStore } from './UserStore'
 import { doc, setDoc, onSnapshot } from 'firebase/firestore'
 import { db } from '@/firebase'
 
+function sanitizeAndRenameFile(file, userId) {
+  const extension = file.name.split('.').pop()
+  const timestamp = Date.now()
+
+  const safeFilename = `img--${userId}--${timestamp}.${extension}`
+
+  return new File([file], safeFilename, { type: file.type })
+}
+
 function getImageId(parkId, userId, filename) {
   const baseName = filename.split('.')[0] // removes .jpg, .png, etc.
   return `${parkId}_${userId}_${baseName}`
@@ -34,11 +43,12 @@ export const useUploadsStore = defineStore('UploadsStore', {
 
       const parkId = skateparkStore.getCurrentPark.id
       const userId = userStore.user.uid
-      const filePath = `images/${parkId}/${userId}/${file.name}`
+      const renamedFile = sanitizeAndRenameFile(file, userId)
+      const filePath = `images/${parkId}/${userId}/${renamedFile.name}`
       const fileRef = storageRef(storage, filePath)
-      const imageId = getImageId(parkId, userId, file.name)
+      const imageId = getImageId(parkId, userId, renamedFile.name)
 
-      const uploadTask = uploadBytesResumable(fileRef, file)
+      const uploadTask = uploadBytesResumable(fileRef, renamedFile)
 
       uploadTask.on(
         'state_changed',

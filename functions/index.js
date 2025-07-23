@@ -54,7 +54,7 @@ exports.saveResizedImageMetadata = onObjectFinalized(async (event) => {
       updatedAt: admin.firestore.FieldValue.serverTimestamp(),
     },
     { merge: true },
-  ) // Merge prevents overwriting the other URL
+  )
 
   console.log(`✅ Stored ${sizeKey} for ${filePath}`)
 })
