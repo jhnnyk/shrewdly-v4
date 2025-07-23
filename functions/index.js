@@ -37,9 +37,8 @@ exports.saveResizedImageMetadata = onObjectFinalized(async (event) => {
   const filename = parts[4] // e.g. photo_200x200.jpeg
 
   // Get base image ID
-  const baseName = filename.split('_')[0] // "photo"
+  const imageId = filename.split('_')[0] // "photo"
   const sizeSuffix = filename.split('_')[1] || '' // "200x200.jpeg"
-  const imageId = `${parkId}_${userId}_${baseName}`
 
   // Determine which field to update
   const sizeKey = sizeSuffix.includes('600') ? 'lgUrl' : 'smUrl'

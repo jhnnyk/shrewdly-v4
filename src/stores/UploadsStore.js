@@ -15,11 +15,6 @@ function sanitizeAndRenameFile(file, userId) {
   return new File([file], safeFilename, { type: file.type })
 }
 
-function getImageId(parkId, userId, filename) {
-  const baseName = filename.split('.')[0] // removes .jpg, .png, etc.
-  return `${parkId}_${userId}_${baseName}`
-}
-
 export const useUploadsStore = defineStore('UploadsStore', {
   state: () => ({
     uploadProgress: 0,
@@ -46,7 +41,7 @@ export const useUploadsStore = defineStore('UploadsStore', {
       const renamedFile = sanitizeAndRenameFile(file, userId)
       const filePath = `images/${parkId}/${userId}/${renamedFile.name}`
       const fileRef = storageRef(storage, filePath)
-      const imageId = getImageId(parkId, userId, renamedFile.name)
+      const imageId = renamedFile.name.split('.')[0] // removes .jpg, .png, etc.
 
       const uploadTask = uploadBytesResumable(fileRef, renamedFile)
 
