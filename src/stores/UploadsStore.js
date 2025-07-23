@@ -66,7 +66,7 @@ export const useUploadsStore = defineStore('UploadsStore', {
             {
               parkId,
               userId,
-              // originalUrl,
+              displayName: userStore.user.displayName,
               createdAt: Date.now(),
               status: 'uploaded',
             },
