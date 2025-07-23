@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSkateparkStore } from '@/stores/SkateparkStore'
 import { useUserStore } from '@/stores/UserStore'
+import { useUploadsStore } from '@/stores/UploadsStore'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import { collection, addDoc, doc, updateDoc, arrayUnion } from 'firebase/firestore'
@@ -11,6 +12,7 @@ import ImageUploader from '@/components/ImageUploader.vue'
 
 const skateparkStore = useSkateparkStore()
 const userStore = useUserStore()
+const uploadsStore = useUploadsStore()
 const router = useRouter()
 
 const date = ref()
@@ -29,6 +31,7 @@ const addSession = async () => {
     sport: userStore.user.sport,
     title: title.value,
     notes: notes.value,
+    photos: uploadsStore.photoIds,
   })
 
   // confirm write

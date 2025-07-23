@@ -33,7 +33,7 @@ const uploadImage = () => {
       <span class="material-symbols-outlined progress-spin">progress_activity</span>
     </div>
 
-    <div v-for="img in uploadsStore.photos">
+    <div v-for="img in uploadsStore.photoUrls">
       <img :src="img.sm" alt="uploaded image" />
     </div>
   </div>

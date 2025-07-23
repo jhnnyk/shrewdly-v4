@@ -22,7 +22,8 @@ export const useUploadsStore = defineStore('UploadsStore', {
     uploadedImageUrl: null,
     isUploading: false,
     isProcessing: false,
-    photos: [],
+    photoUrls: [],
+    photoIds: [],
   }),
 
   actions: {
@@ -79,11 +80,11 @@ export const useUploadsStore = defineStore('UploadsStore', {
             console.log('we have the photo: ', data)
 
             if (data?.smUrl && data?.lgUrl) {
-              this.photos.push({
-                id: imageId,
+              this.photoUrls.push({
                 sm: data.smUrl,
                 lg: data.lgUrl,
               })
+              this.photoIds.push(imageId)
               // this.uploadedImageUrl = data.smUrl
               this.isUploading = false
               this.isProcessing = false
