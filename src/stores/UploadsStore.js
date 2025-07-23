@@ -30,7 +30,7 @@ export const useUploadsStore = defineStore('UploadsStore', {
       this.isUploading = true
       this.uploadProgress = 0
       this.uploadError = null
-      this.uploadedImageUrl = null
+      // this.uploadedImageUrl = null
       this.isProcessing = false
 
       const skateparkStore = useSkateparkStore()
@@ -80,10 +80,11 @@ export const useUploadsStore = defineStore('UploadsStore', {
 
             if (data?.smUrl && data?.lgUrl) {
               this.photos.push({
+                id: imageId,
                 sm: data.smUrl,
                 lg: data.lgUrl,
               })
-              this.uploadedImageUrl = data.smUrl
+              // this.uploadedImageUrl = data.smUrl
               this.isUploading = false
               this.isProcessing = false
             }

@@ -33,9 +33,8 @@ const uploadImage = () => {
       <span class="material-symbols-outlined progress-spin">progress_activity</span>
     </div>
 
-    <div v-if="uploadsStore.uploadedImageUrl">
-      <p>image uploaded and resized!</p>
-      <img :src="uploadsStore.uploadedImageUrl" alt="uploaded image" />
+    <div v-for="img in uploadsStore.photos">
+      <img :src="img.sm" alt="uploaded image" />
     </div>
   </div>
 </template>
