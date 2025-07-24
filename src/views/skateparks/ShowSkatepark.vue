@@ -1,6 +1,7 @@
 <script setup>
 import { useSkateparkStore } from '@/stores/SkateparkStore'
 import { useSessionStore } from '@/stores/SessionStore'
+import { useUploadsStore } from '@/stores/UploadsStore'
 import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -8,9 +9,11 @@ const route = useRoute()
 
 const skateparkStore = useSkateparkStore()
 const sessionStore = useSessionStore()
+const uploadsStore = useUploadsStore()
 
 onMounted(async () => {
   sessionStore.fetchSkateparkSessions(route.params.id)
+  uploadsStore.fetchSkateparkUploads(route.params.id)
 })
 
 const formatDate = (date) => {
@@ -81,6 +84,19 @@ const getSportIcon = (sport) => {
         </a>
       </div>
     </section>
+
+    <div>
+      <h4>Photos</h4>
+
+      <figure v-for="image in uploadsStore.skateparkUploads" :key="image.id">
+        <img :src="image.smUrl" :alt="image.displayName" />
+        <figcaption>
+          uploaded
+          {{ formatDate(image.updatedAt) }}
+          by {{ image.displayName }}
+        </figcaption>
+      </figure>
+    </div>
 
     <div>
       <h4>Recent Sessions</h4>

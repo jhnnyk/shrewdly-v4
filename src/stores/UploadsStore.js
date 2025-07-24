@@ -3,7 +3,7 @@ import { ref as storageRef, uploadBytesResumable } from 'firebase/storage'
 import { storage } from '@/firebase'
 import { useSkateparkStore } from './SkateparkStore'
 import { useUserStore } from './UserStore'
-import { doc, setDoc, onSnapshot } from 'firebase/firestore'
+import { doc, setDoc, onSnapshot, collection, query, where, getDocs } from 'firebase/firestore'
 import { db } from '@/firebase'
 
 function sanitizeAndRenameFile(file, userId) {
@@ -24,6 +24,10 @@ export const useUploadsStore = defineStore('UploadsStore', {
     isProcessing: false,
     photoUrls: [],
     photoIds: [],
+
+    isLoading: false,
+    error: null,
+    skateparkUploads: [],
   }),
 
   actions: {
@@ -92,6 +96,26 @@ export const useUploadsStore = defineStore('UploadsStore', {
           })
         },
       )
+    },
+
+    async fetchSkateparkUploads(id) {
+      console.log('getting skatepark uploads')
+
+      this.isLoading = true
+      const uploadsCollection = collection(db, 'images')
+
+      try {
+        const q = query(uploadsCollection, where('parkId', '==', id))
+        const querySnapshot = await getDocs(q)
+
+        this.skateparkUploads = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }))
+      } catch (error) {
+        this.error = error
+        this.isLoading = false
+      }
     },
   },
 })
