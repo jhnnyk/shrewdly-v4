@@ -55,6 +55,8 @@ const addPark = async () => {
     lights: lights.value,
     tags: tags.value,
     status: status.value,
+    sessionCount: 0,
+    uploadsCount: 0,
   })
 
   // confirm write

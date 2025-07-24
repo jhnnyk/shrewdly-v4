@@ -112,10 +112,18 @@ export const useUploadsStore = defineStore('UploadsStore', {
           id: doc.id,
           ...doc.data(),
         }))
+        this.isLoading = false
+
+        const skateparkStore = useSkateparkStore()
+        skateparkStore.updateUploadsCount(id, this.skateparkUploads.length)
       } catch (error) {
         this.error = error
         this.isLoading = false
       }
     },
+  },
+
+  getters: {
+    getSkateparkUploads: (state) => state.skateparkUploads,
   },
 })

@@ -37,6 +37,17 @@ export const useSkateparkStore = defineStore('SkateparkStore', {
         this.isLoading = false
       }
     },
+
+    async updateUploadsCount(id, count) {
+      try {
+        const skateparkRef = doc(db, 'skateparks', id)
+        setDoc(skateparkRef, { uploadsCount: count }, { merge: true })
+      } catch (error) {
+        console.log(error)
+        this.error = error
+        this.isLoading = false
+      }
+    },
   },
 
   getters: {

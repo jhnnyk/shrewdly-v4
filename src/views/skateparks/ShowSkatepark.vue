@@ -60,14 +60,13 @@ const getSportIcon = (sport) => {
       <span class="rating-count">(0)</span>
 
       <div class="stats">
-        <p><span class="material-symbols-outlined"> photo_camera </span> 0 photos</p>
+        <p>
+          <span class="material-symbols-outlined"> photo_camera </span>
+          {{ uploadsStore.getSkateparkUploads.length }} photos
+        </p>
         <p>
           <span class="material-symbols-outlined"> group </span>
-          {{
-            sessionStore.getSkateparkSessions.length
-              ? sessionStore.getSkateparkSessions.length
-              : '0'
-          }}
+          {{ sessionStore.getSkateparkSessions.length }}
           sessions
         </p>
       </div>
@@ -88,7 +87,7 @@ const getSportIcon = (sport) => {
     <div>
       <h4>Photos</h4>
 
-      <figure v-for="image in uploadsStore.skateparkUploads" :key="image.id">
+      <figure v-for="image in uploadsStore.getSkateparkUploads" :key="image.id">
         <img :src="image.smUrl" :alt="image.displayName" />
         <figcaption>
           uploaded

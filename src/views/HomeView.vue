@@ -18,10 +18,13 @@ const skateparkStore = useSkateparkStore()
             </p>
 
             <div class="stats">
-              <p><span class="material-symbols-outlined"> photo_camera </span> 0 photos</p>
+              <p>
+                <span class="material-symbols-outlined"> photo_camera </span>
+                {{ park.uploadsCount }} photos
+              </p>
               <p>
                 <span class="material-symbols-outlined"> group </span>
-                {{ park.sessionCount ? park.sessionCount : '0' }} sessions
+                {{ park.sessionCount }} sessions
               </p>
             </div>
           </section>
