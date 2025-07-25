@@ -93,17 +93,17 @@ const getSportIcon = (sport) => {
 
     <div>
       <h4>Photos</h4>
-
-      <div v-for="image in uploadsStore.getSkateparkUploads" :key="image.id">
-        <figure v-if="image.smUrl">
-          <img :src="image.smUrl" :alt="`${image.displayName}'s photo`" />
-          <figcaption>
-            uploaded
-            {{ formatDate(image.updatedAt) }}
-            by {{ image.displayName }}
-          </figcaption>
-        </figure>
-        <div v-else>placeholder image</div>
+      <div class="thumbnails">
+        <div v-for="image in uploadsStore.getSkateparkUploads" :key="image.id" class="thumbnail">
+          <figure v-if="image.smUrl">
+            <img :src="image.smUrl" :alt="`${image.displayName}'s photo`" />
+            <figcaption>
+              {{ image.displayName }} <br />
+              {{ formatDate(image.updatedAt) }}
+            </figcaption>
+          </figure>
+          <div v-else>placeholder image</div>
+        </div>
       </div>
     </div>
 
@@ -152,5 +152,22 @@ const getSportIcon = (sport) => {
 .action-buttons button {
   display: block;
   width: 100%;
+}
+
+.thumbnails {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.thumbnail {
+  text-align: center;
+  padding: 10px;
+}
+
+.thumbnail img {
+  border-radius: 20px;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
 }
 </style>

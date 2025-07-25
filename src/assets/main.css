@@ -63,7 +63,9 @@ p {
 }
 
 ul,
-li {
+li,
+figure,
+figcaption {
   margin: 0;
   padding: 0;
 }
