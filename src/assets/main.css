@@ -5,6 +5,7 @@
   --strong-text-color: #f1f5f9;
   --text-color: #64748b;
   --highlight-color: #ec4899;
+  --text-overlay-bg: rgba(0, 0, 0, 0.5);
 }
 
 body {
@@ -27,7 +28,7 @@ h3 {
   font-weight: 400;
   font-style: normal;
   margin: 0;
-  padding: 10px 0;
+  padding: 6px 0;
 }
 
 h1 {
@@ -152,7 +153,8 @@ button.back-button {
   background-color: var(--content-bg-color);
   color: var(--highlight-color);
   border: none;
-  margin-top: 20px;
+  margin: 20px 0;
+  opacity: 0.8;
 }
 
 .logo {

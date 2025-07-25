@@ -2,7 +2,7 @@
 import { useSkateparkStore } from '@/stores/SkateparkStore'
 import { useSessionStore } from '@/stores/SessionStore'
 import { useUploadsStore } from '@/stores/UploadsStore'
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
@@ -11,9 +11,15 @@ const skateparkStore = useSkateparkStore()
 const sessionStore = useSessionStore()
 const uploadsStore = useUploadsStore()
 
+const backgroundImage = ref('')
+
 onMounted(async () => {
-  sessionStore.fetchSkateparkSessions(route.params.id)
-  uploadsStore.fetchSkateparkUploads(route.params.id)
+  await sessionStore.fetchSkateparkSessions(route.params.id)
+  await uploadsStore.fetchSkateparkUploads(route.params.id)
+
+  if (uploadsStore.getSkateparkUploads[0]) {
+    backgroundImage.value = `url(${uploadsStore.getSkateparkUploads[0].lgUrl})`
+  }
 })
 
 const formatDate = (date) => {
@@ -47,19 +53,27 @@ const getSportIcon = (sport) => {
   <div v-if="skateparkStore.isLoading">Loading ....</div>
 
   <div v-else>
-    <p>
-      <RouterLink :to="{ name: 'home' }">
-        <button class="back-button">
-          <span class="material-symbols-outlined"> arrow_back </span>
-        </button>
-      </RouterLink>
-    </p>
-    <h1>{{ skateparkStore.getCurrentPark.name }}</h1>
-    <p>
-      <span class="material-symbols-outlined"> location_on </span>
-      {{ skateparkStore.getCurrentPark.city }},
-      {{ skateparkStore.getCurrentPark.state.substring(0, 2) }}
-    </p>
+    <div
+      :style="{ backgroundImage: backgroundImage }"
+      class="skatepark-header"
+      :class="{ 'has-image': backgroundImage }"
+    >
+      <p>
+        <RouterLink :to="{ name: 'home' }">
+          <button class="back-button">
+            <span class="material-symbols-outlined"> arrow_back </span>
+          </button>
+        </RouterLink>
+      </p>
+      <div class="skatepark-title">
+        <h1>{{ skateparkStore.getCurrentPark.name }}</h1>
+        <p>
+          <span class="material-symbols-outlined"> location_on </span>
+          {{ skateparkStore.getCurrentPark.city }},
+          {{ skateparkStore.getCurrentPark.state.substring(0, 2) }}
+        </p>
+      </div>
+    </div>
 
     <section>
       <span class="material-symbols-outlined solid highlight"> star </span>
@@ -136,6 +150,28 @@ const getSportIcon = (sport) => {
 </template>
 
 <style scoped>
+.skatepark-header {
+  margin: 0 -20px;
+  padding: 20px;
+}
+
+.skatepark-header.has-image {
+  height: 350px;
+  margin-bottom: 20px;
+  color: var(--strong-text-color);
+  position: relative;
+  background-size: cover;
+}
+
+.has-image .skatepark-title {
+  background-color: var(--text-overlay-bg);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin: 0 -20px;
+  padding: 15px 30px;
+}
+
 .stats p {
   margin: 10px 0 15px 0;
 }
