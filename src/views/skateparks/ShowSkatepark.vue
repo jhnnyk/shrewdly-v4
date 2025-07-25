@@ -47,6 +47,13 @@ const getSportIcon = (sport) => {
   <div v-if="skateparkStore.isLoading">Loading ....</div>
 
   <div v-else>
+    <p>
+      <RouterLink :to="{ name: 'home' }">
+        <button class="back-button">
+          <span class="material-symbols-outlined"> arrow_back </span>
+        </button>
+      </RouterLink>
+    </p>
     <h1>{{ skateparkStore.getCurrentPark.name }}</h1>
     <p>
       <span class="material-symbols-outlined"> location_on </span>

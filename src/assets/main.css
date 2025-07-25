@@ -146,6 +146,13 @@ button.inverted {
   border: 2px solid var(--highlight-color);
 }
 
+button.back-button {
+  background-color: var(--content-bg-color);
+  color: var(--highlight-color);
+  border: none;
+  margin-top: 20px;
+}
+
 .logo {
   color: var(--highlight-color);
   font-family: 'Sonsie One', cursive, serif, system-ui;
