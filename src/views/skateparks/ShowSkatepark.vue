@@ -87,17 +87,17 @@ const getSportIcon = (sport) => {
     <div>
       <h4>Photos</h4>
 
-      <figure v-for="image in uploadsStore.getSkateparkUploads" :key="image.id">
-        <div v-if="image.smUrl">
+      <div v-for="image in uploadsStore.getSkateparkUploads" :key="image.id">
+        <figure v-if="image.smUrl">
           <img :src="image.smUrl" :alt="`${image.displayName}'s photo`" />
           <figcaption>
             uploaded
             {{ formatDate(image.updatedAt) }}
             by {{ image.displayName }}
           </figcaption>
-        </div>
+        </figure>
         <div v-else>placeholder image</div>
-      </figure>
+      </div>
     </div>
 
     <div>
