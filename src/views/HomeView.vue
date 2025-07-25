@@ -5,6 +5,10 @@ const skateparkStore = useSkateparkStore()
 </script>
 
 <template>
+  <header>
+    <h1 class="logo">Shredly</h1>
+    <p>Discover amazing skateparks. Log your sessions. Add photos.</p>
+  </header>
   <div v-if="skateparkStore.isLoading">Loading ....</div>
   <div v-else>
     <ul class="park-list">

@@ -28,10 +28,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <header>
-    <h1 class="logo">Shredly</h1>
-  </header>
-
   <main>
     <RouterView />
   </main>
