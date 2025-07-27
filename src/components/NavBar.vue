@@ -8,6 +8,10 @@ import { RouterLink } from 'vue-router'
       <span class="material-symbols-outlined"> home </span><br />
       Home
     </RouterLink>
+    <RouterLink to="/map">
+      <span class="material-symbols-outlined"> map </span><br />
+      Map
+    </RouterLink>
     <RouterLink to="/profile">
       <span class="material-symbols-outlined"> account_circle </span><br />
       Profile
