@@ -102,7 +102,8 @@ function locateUser() {
         :icon="skateIcon"
       >
         <l-popup>
-          <strong>{{ park.name }}</strong
+          <RouterLink :to="`/skateparks/${park.state.slice(3)}/${park.slug}/${park.id}`">
+            <strong>{{ park.name }}</strong> </RouterLink
           ><br />
           {{ park.city }}
         </l-popup>
