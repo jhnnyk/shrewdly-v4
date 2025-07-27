@@ -56,6 +56,14 @@ const router = createRouter({
         title: (route) => `add  ${route.params.slug.replace(/-/g, ' ')} session | Shredly`,
       },
     },
+
+    // Map
+    {
+      path: '/map',
+      name: 'map',
+      component: () => import('@/views/MapView.vue'),
+      meta: { title: 'skatepark map | Shredly' },
+    },
   ],
 })
 
