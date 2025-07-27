@@ -228,3 +228,9 @@ button.back-button {
   display: inline-block;
   padding: 0 5px;
 }
+
+.highlight {
+  color: var(--highlight-color);
+  font-size: 1.1em;
+  padding-left: 10px;
+}

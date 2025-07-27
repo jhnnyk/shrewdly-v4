@@ -109,10 +109,12 @@ function locateUser() {
       </l-marker>
     </l-map>
 
-    <button @click="locateUser">
-      <span class="material-symbols-outlined"> location_on </span>
-      Use My Location
-    </button>
+    <p class="location-button">
+      <button @click="locateUser">
+        <span class="material-symbols-outlined"> location_on </span>
+        Use My Location
+      </button>
+    </p>
 
     <ul v-if="nearbyParks.length" class="park-list">
       <li v-for="park in nearbyParks" :key="park.id">
@@ -122,6 +124,7 @@ function locateUser() {
             <p>
               <span class="material-symbols-outlined"> location_on </span>
               {{ park.city }}, {{ park.state.substring(0, 2) }}
+              <span class="highlight">{{ park.distance.toFixed(1) }} mi</span>
             </p>
 
             <div class="stats">
@@ -136,7 +139,6 @@ function locateUser() {
             </div>
           </section>
         </RouterLink>
-        {{ park.name }} – {{ park.distance.toFixed(1) }} mi
       </li>
     </ul>
   </div>
@@ -169,5 +171,10 @@ function locateUser() {
   color: white;
   font-size: 18px;
   z-index: 1;
+}
+
+.location-button {
+  margin: 20px 0;
+  text-align: center;
 }
 </style>
