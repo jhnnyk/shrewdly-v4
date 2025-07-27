@@ -7,6 +7,7 @@ import { useSkateparkStore } from '@/stores/SkateparkStore'
 const center = ref([39.5, -98.35]) // USA center
 const zoom = ref(5)
 const leafletMap = ref(null)
+const nearbyParks = ref([])
 
 const skateparkStore = useSkateparkStore()
 
@@ -33,6 +34,57 @@ const onMapReady = (mapInstance) => {
     mapInstance.fitBounds(bounds, { padding: [20, 20] })
   }
 }
+
+// User location -------
+function toRad(degrees) {
+  return (degrees * Math.PI) / 180
+}
+
+function getDistanceMiles(lat1, lng1, lat2, lng2) {
+  const R = 3958.8 // miles
+  const dLat = toRad(lat2 - lat1)
+  const dLng = toRad(lng2 - lng1)
+
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+  return R * c
+}
+
+function locateUser() {
+  if (!navigator.geolocation) {
+    alert('Geolocation is not supported by your browser.')
+    return
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const { latitude, longitude } = position.coords
+
+      // Zoom map to user location
+      if (leafletMap.value) {
+        leafletMap.value.setView([latitude, longitude], 12)
+      }
+
+      // Find nearest skateparks
+      const sorted = skateparkStore.getParks
+        .map((park) => {
+          const distance = getDistanceMiles(latitude, longitude, park.latitude, park.longitude)
+          return { ...park, distance }
+        })
+        .sort((a, b) => a.distance - b.distance)
+        .slice(0, 10)
+
+      nearbyParks.value = sorted
+    },
+    (error) => {
+      alert('Could not get your location.')
+      console.error(error)
+    },
+  )
+}
 </script>
 
 <template>
@@ -56,6 +108,37 @@ const onMapReady = (mapInstance) => {
         </l-popup>
       </l-marker>
     </l-map>
+
+    <button @click="locateUser">
+      <span class="material-symbols-outlined"> location_on </span>
+      Use My Location
+    </button>
+
+    <ul v-if="nearbyParks.length" class="park-list">
+      <li v-for="park in nearbyParks" :key="park.id">
+        <RouterLink :to="`/skateparks/${park.state.slice(3)}/${park.slug}/${park.id}`">
+          <section>
+            <h3>{{ park.name }}</h3>
+            <p>
+              <span class="material-symbols-outlined"> location_on </span>
+              {{ park.city }}, {{ park.state.substring(0, 2) }}
+            </p>
+
+            <div class="stats">
+              <p>
+                <span class="material-symbols-outlined"> photo_camera </span>
+                {{ park.uploadsCount }} photos
+              </p>
+              <p>
+                <span class="material-symbols-outlined"> group </span>
+                {{ park.sessionCount }} sessions
+              </p>
+            </div>
+          </section>
+        </RouterLink>
+        {{ park.name }} – {{ park.distance.toFixed(1) }} mi
+      </li>
+    </ul>
   </div>
 </template>
 
