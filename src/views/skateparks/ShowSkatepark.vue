@@ -4,8 +4,10 @@ import { useSessionStore } from '@/stores/SessionStore'
 import { useUploadsStore } from '@/stores/UploadsStore'
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 const route = useRoute()
+const router = useRouter()
 
 const skateparkStore = useSkateparkStore()
 const sessionStore = useSessionStore()
@@ -47,6 +49,10 @@ const getSportIcon = (sport) => {
       break
   }
 }
+
+const goBack = () => {
+  router.go(-1)
+}
 </script>
 
 <template>
@@ -59,11 +65,9 @@ const getSportIcon = (sport) => {
       :class="{ 'has-image': backgroundImage }"
     >
       <p>
-        <RouterLink :to="{ name: 'home' }">
-          <button class="back-button">
-            <span class="material-symbols-outlined"> arrow_back </span>
-          </button>
-        </RouterLink>
+        <button @click="goBack" class="back-button">
+          <span class="material-symbols-outlined"> arrow_back </span>
+        </button>
       </p>
       <div class="skatepark-title">
         <h1>{{ skateparkStore.getCurrentPark.name }}</h1>
