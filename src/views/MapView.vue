@@ -8,10 +8,11 @@ const center = ref([39.5, -98.35]) // USA center
 const zoom = ref(5)
 const leafletMap = ref(null)
 const nearbyParks = ref([])
+const userMarker = ref(null)
 
 const skateparkStore = useSkateparkStore()
 
-// Pink marker with "skateboarding" icon
+// Pink marker with skateboarding icon
 const skateIcon = new L.DivIcon({
   html: `
     <div class="custom-marker-wrapper">
@@ -23,6 +24,16 @@ const skateIcon = new L.DivIcon({
   iconSize: [32, 32],
   iconAnchor: [16, 32], // bottom-center of the circle
   popupAnchor: [0, -32],
+})
+
+// Blue dot to mark user location
+const userLocationIcon = L.divIcon({
+  html: `
+    <div class="user-location-wrapper user-location-pulse"></div>
+  `,
+  className: '',
+  iconSize: [16, 16],
+  iconAnchor: [8, 8],
 })
 
 const onMapReady = (mapInstance) => {
@@ -66,6 +77,15 @@ function locateUser() {
       // Zoom map to user location
       if (leafletMap.value) {
         leafletMap.value.setView([latitude, longitude], 12)
+
+        // 📍 Add or update blue user marker
+        if (userMarker.value) {
+          userMarker.value.setLatLng([latitude, longitude])
+        } else {
+          userMarker.value = L.marker([latitude, longitude], {
+            icon: userLocationIcon,
+          }).addTo(leafletMap.value)
+        }
       }
 
       // Find nearest skateparks
@@ -177,5 +197,45 @@ function locateUser() {
 .location-button {
   margin: 20px 0;
   text-align: center;
+}
+
+.user-location-wrapper {
+  width: 12px;
+  height: 12px;
+  background-color: #3b82f6; /* Tailwind blue-500 */
+  border: 2px solid white;
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 2;
+}
+
+.user-location-pulse::after {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  width: 24px;
+  height: 24px;
+  background-color: #3b82f6;
+  border-radius: 50%;
+  opacity: 0.4;
+  animation: pulse 1.5s infinite;
+  z-index: 1;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.4;
+  }
+  70% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
 }
 </style>
