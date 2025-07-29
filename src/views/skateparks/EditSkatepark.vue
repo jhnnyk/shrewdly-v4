@@ -52,6 +52,7 @@ const updatePark = async () => {
     params: {
       stateSlug: skateparkStore.getCurrentPark.state.slice(3),
       slug: skateparkStore.getCurrentPark.slug,
+      id: skateparkStore.getCurrentPark.id,
     },
   })
 }
