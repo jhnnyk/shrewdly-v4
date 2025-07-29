@@ -124,10 +124,13 @@ const addSession = async () => {
           <button class="large" type="submit">
             <span class="material-symbols-outlined"> add_circle </span> Save Session
           </button>
+          <RouterLink
+            :to="`/skateparks/${skateparkStore.getCurrentPark.state.slice(3)}/${skateparkStore.getCurrentPark.slug}/${skateparkStore.getCurrentPark.id}`"
+          >
+            <button class="large inverted">Cancel</button>
+          </RouterLink>
         </div>
       </form>
     </section>
   </div>
 </template>
-
-<style></style>
