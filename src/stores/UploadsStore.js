@@ -20,8 +20,7 @@ export const useUploadsStore = defineStore('UploadsStore', {
     uploadProgress: 0,
     uploadError: null,
     uploadedImageUrl: null,
-    isUploading: false,
-    isProcessing: false,
+    status: '',
     photoUrls: [],
     photoIds: [],
 
@@ -32,11 +31,11 @@ export const useUploadsStore = defineStore('UploadsStore', {
 
   actions: {
     async uploadImage(file) {
-      this.isUploading = true
+      this.status = 'uploading'
       this.uploadProgress = 0
       this.uploadError = null
       // this.uploadedImageUrl = null
-      this.isProcessing = false
+      // this.isProcessing = false
 
       const skateparkStore = useSkateparkStore()
       const userStore = useUserStore()
@@ -57,11 +56,11 @@ export const useUploadsStore = defineStore('UploadsStore', {
         },
         (error) => {
           this.uploadError = error
-          this.isUploading = false
+          this.status = ''
         },
         async () => {
           // Original upload complete
-          this.isProcessing = true
+          this.status = 'processing'
 
           // Manually create Firestore doc (Cloud Function will update it later)
           const docRef = doc(db, 'images', imageId)
@@ -90,8 +89,7 @@ export const useUploadsStore = defineStore('UploadsStore', {
               })
               this.photoIds.push(imageId)
               // this.uploadedImageUrl = data.smUrl
-              this.isUploading = false
-              this.isProcessing = false
+              this.status = ''
             }
           })
         },

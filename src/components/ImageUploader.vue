@@ -19,19 +19,17 @@ const uploadImage = () => {
 <template>
   <div>
     <input type="file" @change="handleFileSelect" accept="image/*" />
-    <button @click="uploadImage" :disabled="!selectedFile || uploadsStore.isUploading">
-      upload
+    <button @click="uploadImage" :disabled="!selectedFile || uploadsStore.status != ''">
+      <div v-if="uploadsStore.status == 'uploading'">
+        uploading: {{ uploadsStore.uploadProgress.toFixed(2) }}%
+      </div>
+      <div v-else-if="uploadsStore.status == 'processing'">
+        processing <span class="material-symbols-outlined progress-spin">progress_activity</span>
+      </div>
+      <div v-else>upload</div>
     </button>
 
-    <div v-if="uploadsStore.isUploading">
-      uploading: {{ uploadsStore.uploadProgress.toFixed(2) }}%
-    </div>
-
     <div v-if="uploadsStore.uploadError">error: {{ uploadsStore.uploadError.message }}</div>
-
-    <div v-if="uploadsStore.isProcessing">
-      <span class="material-symbols-outlined progress-spin">progress_activity</span>
-    </div>
 
     <div v-for="img in uploadsStore.photoUrls">
       <img :src="img.sm" alt="uploaded image" />

@@ -157,6 +157,12 @@ button.back-button {
   opacity: 0.8;
 }
 
+button:disabled {
+  background-color: var(--text-color);
+  cursor: not-allowed;
+  border: none;
+}
+
 .logo {
   color: var(--highlight-color);
   font-family: 'Sonsie One', cursive, serif, system-ui;
