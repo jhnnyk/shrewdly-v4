@@ -240,3 +240,20 @@ button:disabled {
   font-size: 1.1em;
   padding-left: 10px;
 }
+
+.thumbnails {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.thumbnail {
+  text-align: center;
+  padding: 10px;
+}
+
+.thumbnail img {
+  border-radius: 20px;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}

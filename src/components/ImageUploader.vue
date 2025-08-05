@@ -31,8 +31,12 @@ const uploadImage = () => {
 
     <div v-if="uploadsStore.uploadError">error: {{ uploadsStore.uploadError.message }}</div>
 
-    <div v-for="img in uploadsStore.photoUrls">
-      <img :src="img.sm" alt="uploaded image" />
+    <div class="thumbnails">
+      <div v-for="img in uploadsStore.photoUrls" class="thumbnail">
+        <figure v-if="img.sm">
+          <img :src="img.sm" alt="uploaded image" />
+        </figure>
+      </div>
     </div>
   </div>
 </template>

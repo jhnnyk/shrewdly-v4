@@ -193,21 +193,4 @@ const goBack = () => {
   display: block;
   width: 100%;
 }
-
-.thumbnails {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.thumbnail {
-  text-align: center;
-  padding: 10px;
-}
-
-.thumbnail img {
-  border-radius: 20px;
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-}
 </style>
