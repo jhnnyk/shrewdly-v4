@@ -2,7 +2,7 @@
 import { useSkateparkStore } from '@/stores/SkateparkStore'
 import { useSessionStore } from '@/stores/SessionStore'
 import { useUploadsStore } from '@/stores/UploadsStore'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useRouter } from 'vue-router'
 
@@ -53,6 +53,10 @@ const getSportIcon = (sport) => {
 const goBack = () => {
   router.go(-1)
 }
+
+const sizeToNumber = computed(() => {
+  return +skateparkStore.getCurrentPark.size
+})
 </script>
 
 <template>
@@ -108,6 +112,47 @@ const goBack = () => {
         </a>
       </div>
     </section>
+
+    <div class="info">
+      <div>
+        <h4>Location</h4>
+        <p>
+          {{ skateparkStore.getCurrentPark.street }}<br />
+          {{ skateparkStore.getCurrentPark.city }},
+          {{ skateparkStore.getCurrentPark.state.substring(0, 2) }}
+          {{ skateparkStore.getCurrentPark.zip }}
+        </p>
+        <p class="map-links">
+          <a
+            target="_blank"
+            :href="`https://www.google.com/maps/search/?api=1&query=${skateparkStore.getCurrentPark.latitude}%2C${skateparkStore.getCurrentPark.longitude}`"
+          >
+            <span class="material-symbols-outlined"> map </span><br />
+            Google
+          </a>
+          <a
+            target="_blank"
+            :href="`http://maps.apple.com/?ll=${skateparkStore.getCurrentPark.latitude},${skateparkStore.getCurrentPark.longitude}&q=${skateparkStore.getCurrentPark.name}`"
+          >
+            <span class="material-symbols-outlined"> map </span><br />
+            Apple
+          </a>
+        </p>
+      </div>
+
+      <div>
+        <h4>Stats</h4>
+        <p>
+          <span class="material-symbols-outlined"> square_foot </span>
+          {{ sizeToNumber.toLocaleString() }} sqft.<br />
+          <span class="material-symbols-outlined"> lightbulb </span>
+          {{ skateparkStore.getCurrentPark.lights ? 'Yes!' : 'no' }}<br />
+          <span class="material-symbols-outlined"> construction </span>
+          {{ skateparkStore.getCurrentPark.builder }}, {{ skateparkStore.getCurrentPark.opened_year
+          }}<br />
+        </p>
+      </div>
+    </div>
 
     <div>
       <h4>Photos</h4>
@@ -180,7 +225,9 @@ const goBack = () => {
   margin: 10px 0 15px 0;
 }
 
-.action-buttons {
+.action-buttons,
+.info,
+.map-links {
   display: flex;
 }
 
@@ -192,5 +239,18 @@ const goBack = () => {
 .action-buttons button {
   display: block;
   width: 100%;
+}
+
+.map-links {
+  text-align: center;
+}
+
+.info div {
+  display: block;
+  width: 100%;
+}
+
+.map-links a {
+  padding-right: 20px;
 }
 </style>

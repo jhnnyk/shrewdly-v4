@@ -47,6 +47,7 @@ h4 {
   color: var(--strong-text-color);
   font-weight: bold;
   font-size: 1.4em;
+  margin-bottom: 10px;
 }
 
 a {
